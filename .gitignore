@@ -1,0 +1,9 @@
+/.idea/
+*.idea
+/.env/
+/__pycache__/
+__pycache__/
+__MACOSX/
+DevIntensive-master/
+/new/
+.geckodriver.log
