@@ -103,3 +103,5 @@ https://wiki.merionet.ru/servernye-resheniya/36/url-i-uri-v-chem-razlichie/
 
  ● сниффер: https://ru.wikipedia.org/wiki/Анализатор_трафика
 
+ ● код возврата: https://ru.wikipedia.org/wiki/Код_возврата
+
