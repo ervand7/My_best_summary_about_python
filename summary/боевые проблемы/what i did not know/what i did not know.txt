@@ -23,7 +23,7 @@
  https://www.hostinger.ru/rukovodstva/shto-takoje-localhost/
  https://www.youtube.com/watch?v=10KguTZ8oio
 
- ● что такое драйвер:
+ ● Что такое драйвер:
  https://www.youtube.com/watch?v=3LV37fT9ZWg
  https://www.youtube.com/watch?v=Dl0LKFB5Ipo&t=252s
 
@@ -70,7 +70,7 @@ https://wiki.merionet.ru/servernye-resheniya/36/url-i-uri-v-chem-razlichie/
 
  ● cdn: https://ru.wikipedia.org/wiki/Content_Delivery_Network
 
- ● что такое сигнатура в Python: https://ru.code-basics.com/languages/python/lessons/function-signature
+ ● сигнатура в Python: https://ru.code-basics.com/languages/python/lessons/function-signature
 
  ● callback в Python - это передача одной функции в качестве параметра другой функции
 
@@ -104,4 +104,10 @@ https://wiki.merionet.ru/servernye-resheniya/36/url-i-uri-v-chem-razlichie/
  ● сниффер: https://ru.wikipedia.org/wiki/Анализатор_трафика
 
  ● код возврата: https://ru.wikipedia.org/wiki/Код_возврата
+
+ ● XSS: https://ru.wikipedia.org/wiki/Межсайтовый_скриптинг
+
+ ● CSRF: https://ru.wikipedia.org/wiki/Межсайтовая_подделка_запроса
+
+ ● SQL-инъекция: https://ru.wikipedia.org/wiki/Внедрение_SQL-кода
 
