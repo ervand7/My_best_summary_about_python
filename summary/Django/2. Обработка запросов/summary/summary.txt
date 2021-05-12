@@ -1,0 +1,12 @@
+Нельзя напрямую импортировать что-то из модуля settings.py, можно только через
+приложение django.conf
+
+Часть URL также может быть динамической. Django умеет парсить URL в соответствии с
+заданным шаблоном и передавать полученные параметры во view:
+https://docs.djangoproject.com/en/3.1/topics/http/urls/#example
+
+Реализуем наш собственный конвертор по такой документации
+https://docs.djangoproject.com/en/3.2/topics/http/urls/
+
+Реализуем наш собственный пагинатор
+https://docs.djangoproject.com/en/3.1/topics/pagination/

@@ -131,3 +131,7 @@ https://appstudio.org/articles/sekrety-terminala-chast-20-upakovka-i-raspakovka-
 
 ● Установка и настройка Midnight Commander
 https://appstudio.org/articles/66933.html
+
+______________________________________________________________________________________________
+● sudo lsof -t -i tcp:8000 | xargs kill -9
+так ожно остановить определенный порт на localhost'е. В данном случае порт 800
