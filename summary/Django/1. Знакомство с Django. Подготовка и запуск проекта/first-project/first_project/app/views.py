@@ -1,5 +1,6 @@
 from django.http import HttpResponse
-from django.shortcuts import render, reverse
+from django.shortcuts import render, reverse  # reverse принимает в себя некое имя
+# и ищет по всем урлам эту информацию
 
 from datetime import datetime
 import os
