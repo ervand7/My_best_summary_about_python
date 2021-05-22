@@ -14,7 +14,7 @@ def get_csv_file_content(delimiter=';'):
         strict=False
     )
 
-    file = '/Users/USER/Desktop/My_best_summary_about_python/summary/Django/3. Динамическое формирование страниц на основе шаблонов/dynamic-templates/task1/inflation_russia.csv'
+    file = 'inflation_russia.csv'
     with open(file=file, encoding='UTF-8') as csv_file:
         columns_names = csv_file.readline().strip().split(delimiter)
         reader_object = csv.DictReader(csv_file, dialect='customcsv')
