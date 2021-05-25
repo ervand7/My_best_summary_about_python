@@ -1,0 +1,77 @@
+Модель в джанго - это представление о таблице в БД посредством Python. Модель
+описывется классом в файле models.py, который должен являться подклассом импортированного
+модуля from django.db import models. Наш класс будет наследоваться от него и
+получать все его методы для работы сданными.
+В этом классе мы будем описывать атрибуты класса. Эти атрибуты будут представлять
+из себя не что иное как соответствующие поля в таблицах БД. У нас получается,
+что в models.py мы будем описывать некую таблицу.
+
+Давайте создадим приложение, в котором будет 2 таблицы: игроки и команды,
+в которых играют игроки.
+
+____________________________________________________________________________________
+Настройка БД
+документация:
+https://docs.djangoproject.com/en/3.1/ref/settings/#databases
+
+Сначала устанавливаем psycopg2-binary==2.8.6
+Далее идем в settings.py, вставляем то, что скопировали с документации
+с нашими кстомными изменениями:
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'netology_db',
+        'USER': 'ervand',
+        'PASSWORD': 'ervand',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
+    }
+}
+
+Открываем терминал и вводим:
+ ● createdb netology_db
+этой командой мы создаем БД. Если в ответ мы получаем такую ошбку:
+createdb: error: could not connect to database template1: could not connect to server: No such file or directory
+        Is the server running locally and accepting
+        connections on Unix domain socket "/tmp/.s.PGSQL.5432"?
+то прописываем ее решение (stackoverflow):
+ ● rm /usr/local/var/postgres/postmaster.pid
+ ● brew services restart postgresql
+далее снова вводим:
+ ● createdb netology_db
+и если получаем такую ошибку:
+createdb: error: could not connect to database template1: FATAL:  the database system is starting up
+то просто еще раз вводим:
+ ● createdb netology_db
+далее все должно работать
+
+ ● dropdb netology_db
+удаление БД
+
+ ● psql netology_db
+проверяем, что можем подключиться к нашей БД
+
+ ● create user ervand with password 'ervand';
+настраиваем пользователя
+
+ ● ./manage.py migrate
+прогоним наши 18 unapplied migration(s)
+
+____________________________________________________________________________________
+Работа c models.py
+После заполнения модуля models переходим в терминал:
+ ● psql netology_db
+снова подключаемся к БД
+
+ ● \d
+смотрим, какие таблицы у нас есть и видим, что системные таблицы создались благодаря миграции
+
+ ● ./manage.py makemigrations
+создаем миграции. Видим, что после этого в директории migrations у нас создался 0001_initial
+
+ ● ./manage.py migrate
+прогоняем миграцию. Сейчас у нас в БД появилась новая таблица players_player
+
+ ● \d players_player
+смотрим содержимое нашей таблицы
+
