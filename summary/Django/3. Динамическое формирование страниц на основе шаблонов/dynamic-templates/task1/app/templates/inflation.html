@@ -52,14 +52,9 @@
                                 <td>-</td>
 <!--       определяем цвета для всех остальных значений         -->
                             {% else %}
-                                {% if indicator < 0 %} <td class="green darken-2">
-                                {% elif indicator >= 5 %} <td class="red lighten-1">
-                                {% elif indicator >= 2 %} <td class="red lighten-3">
-                                {% elif indicator >= 1 %} <td class="red lighten-5">
-                                <!-- значения, не попадающие под условия выше, будут прозрачными -->
-                                {% else %} <td>
-                                {% endif %}
-                                {{ cell }}</td> <!-- один закрывающий тег на все <td> -->
+                                {% with color=indicator|choice_of_color %}
+                                <td class={{color}}>{{ cell }}</td> <!-- один закрывающий тег на все <td> -->
+                                {% endwith %}
                             {% endif %}
                         {% endwith %}
                     {% endif %}

@@ -18,3 +18,17 @@ def convert_str_to_float(indicator: str) -> float:
     """
     rez = float(indicator) if indicator else ...
     return rez
+
+
+@register.filter
+def choice_of_color(indicator: float):
+    if indicator < 0:
+        return "green darken-2"
+    if indicator >= 5:
+        return "red lighten-1"
+    if indicator >= 2:
+        return "red lighten-3"
+    if indicator >= 1:
+        return "red lighten-5"
+    else:
+        return "<td>"
