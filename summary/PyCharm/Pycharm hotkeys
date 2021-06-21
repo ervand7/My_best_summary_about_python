@@ -12,6 +12,8 @@ where did click). Sometimes me can use as alternative <click + command + alt + B
 
  • command + E           the list of files which we work with last time (in chronological order)
 
+ • command + K           clear terminal buffer
+
  • command + O           go to classes or symbols or files. The same method is <double shift>
 
  • sel. obj. + alt + fn + f7        show us places in code where used object which we have highlighted
@@ -19,6 +21,8 @@ where did click). Sometimes me can use as alternative <click + command + alt + B
  • command + fn + f12    there opens the structure of current file before us
 
  • command + Z           canceling of the last act (similarly to graphical editors)
+
+ • command + shift + Z   reverse command for <command + Z>
 
  • alt + fn + f3         bookmark mnemonic. Further to navigate by this bookmarks use tab 'favourites'
 in the lower left corner
