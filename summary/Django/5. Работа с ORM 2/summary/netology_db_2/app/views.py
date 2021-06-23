@@ -66,6 +66,6 @@ def add_cars_to_shop_view(request):
     # Car.objects.first().carshop_set.all() если не прописывать related_name в классе CarShop
 # то есть принцип такой: после Car.objects.first(). прописываем lowercase класс CarShop и приписываем к нему _set.all()
 
-    context = {'shops': CarShop.objects.all()}
+    context = {'shops': CarShop.objects.all().prefetch_related('car')}
 
     return render(request, 'app/carShop.html', context=context)
