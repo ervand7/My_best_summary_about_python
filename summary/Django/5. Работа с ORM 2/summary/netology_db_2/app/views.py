@@ -59,13 +59,18 @@ def add_cars_to_shop_view(request):
 
     # выведем в консоль все магазины, в которых продается наша (конкретно первая) машина
     # сравни:
-    #     [shop.car.all() for shop in CarShop.objects.all()] - так получаем из каждого магазина все машины, которые магазин содержит
+    #     [shop.car.all() for shop in CarShop.objects.all()] - так получаем из каждого магазина все машины
     #     x = Car.objects.first().shops.all() - так получаем для первой машины все ее магазины, в которых она продается
-    first_car_magazines = Car.objects.first().shops.all()  # cars берется из related_name (models.py, 10 строка)
+    first_car_magazines = Car.objects.first().shops.all()  # shops берется из related_name (models.py, 10 строка)
     print(first_car_magazines)
     # Car.objects.first().carshop_set.all() если не прописывать related_name в классе CarShop
 # то есть принцип такой: после Car.objects.first(). прописываем lowercase класс CarShop и приписываем к нему _set.all()
 
-    context = {'shops': CarShop.objects.all().prefetch_related('car')}
+    context = {'shops': CarShop.objects.all()}
+    # context = {'shops': CarShop.objects.all().prefetch_related('car')}
+    # context = {'shops': CarShop.objects.all().values('id')}  # [{'id': 3}, {'id': 1}, {'id': 2}]
+    # context = {'shops': CarShop.objects.all().values_list('name', flat=True)} #['Магазин 3', 'Магазин 1', 'Магазин 2']
+
+    print(context)
 
     return render(request, 'app/carShop.html', context=context)

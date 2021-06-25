@@ -1,6 +1,10 @@
 Связь m2m мы можем прописать в любой из двух зависимых таблиц с помощью
 x = models.ManyToManyField('Зависимый_класс', related_name='любое_слово', through='CarInShop')
 ________________________________________________________________________________________________________________
+ ● python manage.py showmigrations
+посмотреть список всех миграций, которые есть.
+[x] - миграции, которые уже синхронизированны с БД
+[ ] - миграции, которые еще не синхронизированны с БД
  ● python manage.py makemigrations --empty app
 так мы можем создать пустую миграцию и реализовать в ней свою логику.
 Например, сейчас, с помощью миграций мы сделаем пользователя админки:
@@ -86,9 +90,9 @@ ________________________________________________________________________________
 Если мы выбираем просто all(), то запросы будут делаться на каждом цикле итерации.
 context = {'shops': CarShop.objects.all()}
 И мы получаем такой результат:
-(0.001) SELECT "app_car"."id", "app_car"."name" FROM "app_car" INNER JOIN "app_carinshop" ON ("app_car"."id" = "app_carinshop"."car_id") WHERE "app_carinshop"."shop_id" = 3; args=(3,)
-(0.001) SELECT "app_car"."id", "app_car"."name" FROM "app_car" INNER JOIN "app_carinshop" ON ("app_car"."id" = "app_carinshop"."car_id") WHERE "app_carinshop"."shop_id" = 1; args=(1,)
-(0.001) SELECT "app_car"."id", "app_car"."name" FROM "app_car" INNER JOIN "app_carinshop" ON ("app_car"."id" = "app_carinshop"."car_id") WHERE "app_carinshop"."shop_id" = 2; args=(2,)
+SELECT "app_car"."id", "app_car"."name" FROM "app_car" INNER JOIN "app_carinshop" ON ("app_car"."id" = "app_carinshop"."car_id") WHERE "app_carinshop"."shop_id" = 3; args=(3,)
+SELECT "app_car"."id", "app_car"."name" FROM "app_car" INNER JOIN "app_carinshop" ON ("app_car"."id" = "app_carinshop"."car_id") WHERE "app_carinshop"."shop_id" = 1; args=(1,)
+SELECT "app_car"."id", "app_car"."name" FROM "app_car" INNER JOIN "app_carinshop" ON ("app_car"."id" = "app_carinshop"."car_id") WHERE "app_carinshop"."shop_id" = 2; args=(2,)
 
 
 Но если мы применим prefetch_related:
@@ -98,3 +102,18 @@ SELECT ("app_carinshop"."shop_id") AS "_prefetch_related_val_shop_id", "app_car"
 INNER JOIN "app_carinshop" ON ("app_car"."id" = "app_carinshop"."car_id") WHERE "app_carinshop"."shop_id" IN (3, 1, 2);
 args=(3, 1, 2)
 
+________________________________________________________________________________________________________________
+django-debug-toolbar
+Инструкция по настройке: https://django-debug-toolbar.readthedocs.io/en/latest/installation.html
+1) pip install django-debug-toolbar
+2) в settings.py в INSTALLED_APPS прописываем 'debug_toolbar'
+3) в settings.py в MIDDLEWARE прописываем 'debug_toolbar.middleware.DebugToolbarMiddleware'
+4) в settings.py прописываем
+INTERNAL_IPS = [
+    # ...
+    '127.0.0.1',
+    # ...
+]
+5) урлах прописываем path('__debug__/', include(debug_toolbar.urls))
+
+Для тех же целей еще существует модуль django-silk
