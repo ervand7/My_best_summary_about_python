@@ -219,12 +219,21 @@ ________________________________________________________________________________
 Полный список фильтров находится тут:
 https://docs.djangoproject.com/en/2.1/ref/models/querysets/#field-lookups
 
+Пример комбинированного фильтра:
+Person.objects.filter(
+     birthday__gt=datetime.date().today() — datetime.timedelta(days=365*18)).exclude(is_deleted=True
+)
+
+____________________________________________________________________________________
+ ● python manage.py sqlmigrate название_приложения 0001
+смотрим, какой запрос сформирует Django для определенной миграции
+
 ____________________________________________________________________________________
 Откат миграций:
 $ python manage.py makemigrations
 
-Migrations for 'car_enthusiasts':
-  car_enthusiasts/migrations/0001_initial.py
+Migrations for 'название_приложения':
+  название_приложения/migrations/0001_initial.py
       — Create model Car
       — Create model Person
 # основная команда для применения всех непримененных миграций
@@ -232,9 +241,9 @@ $ python manage.py migrate
 
 
 # откат изменения на нужную точку
-python manage.py migrate car_enthusiasts 0001
+python manage.py migrate название_приложения 0001
 # откат всех изменений
-python manage.py migrate car_enthusiasts zero
+python manage.py migrate название_приложения zero
 ____________________________________________________________________________________
 Информация про Class Based View: http://ccbv.co.uk
 
@@ -250,3 +259,7 @@ http://127.0.0.1:8000/admin/
 Password: Внимание! На маке пароль не виден во время ввода! (admin)
 Password (again): То же самое
 Superuser created successfully.
+
+В файле admin.py можно настроить, какие именно поля будут отображаться в админке, например:
+classBookAdmin(admin.ModelAdmin):
+    list_display = ('name', 'author', 'pub_date', )
