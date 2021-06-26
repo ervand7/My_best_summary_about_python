@@ -74,3 +74,4 @@ def add_cars_to_shop_view(request):
     print(context)
 
     return render(request, 'app/carShop.html', context=context)
+
