@@ -30,6 +30,8 @@ urlpatterns = [
 def date_view(request, year, month, day):
     date = datetime(year, month, day)
     return HttpResponse(date)
+
+НО ЭТО ЧЕРЕСЧУР ГРОМОСТКИЙ ВАРИАНТ. ЭЛЕГАНТНЕЙ БУДЕТ ВРЕШИТЬ ДАННЫЙ ВОПРОС ЧЕРЕЗ КОНВЕРТОРЫ!!!!!!!
 ----------------------------------------------------------------------------------
 
 Реализуем наш собственный конвертор по такой документации
@@ -65,6 +67,10 @@ register_converter(converter=DateConverter, type_name='my_convertor')
 urlpatterns = [
     path('date/<my_convertor:value>/', date_view, name='date'),
 ]
+
+# вьюха еперь будет выгляжеть вот так:
+def date_view(request, value):
+    return HttpResponse(value)
 ----------------------------------------------------------------------------------
 
 Реализуем наш собственный пагинатор
