@@ -111,3 +111,7 @@ https://wiki.merionet.ru/servernye-resheniya/36/url-i-uri-v-chem-razlichie/
 
  ● SQL-инъекция: https://ru.wikipedia.org/wiki/Внедрение_SQL-кода
 
+ ● WADL: https://ru.wikipedia.org/wiki/WADL
+
+ ● WSDL: https://ru.wikipedia.org/wiki/WSDL
+
