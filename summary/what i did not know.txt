@@ -115,3 +115,7 @@ https://wiki.merionet.ru/servernye-resheniya/36/url-i-uri-v-chem-razlichie/
 
  ● WSDL: https://ru.wikipedia.org/wiki/WSDL
 
+ ● HTTP протокол и его методы: https://ru.wikipedia.org/wiki/HTTP
+
+ ● REST архитектурный стиль и его 6 ограничений: https://ru.wikipedia.org/wiki/REST
+
