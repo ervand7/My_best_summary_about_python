@@ -5,9 +5,11 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK, HTTP_201_CREATED
 from rest_framework.views import APIView
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.viewsets import ModelViewSet
 
 from .models import Car
-from .serializers import CarSerializer
+from .serializers import CarSerializer, CarSerializerFromModelSerializer
 
 GET = 'GET'
 POST = 'POST'
@@ -101,3 +103,36 @@ class CarApiView(APIView):
         context = CarSerializer(car)
 
         return Response(context.data, status=HTTP_201_CREATED)
+
+
+# ===============================================================================================
+#             РЕАЛИЗАЦИЯ VIEWS НА ОСНОВЕ generics + сериализатора на основе ModelSerializer
+
+class CarGetCreateApiView(ListCreateAPIView):
+    """
+    Этот класс получает информацию и создает информацию (get, post).
+    """
+    # нужно заполнить 2 обязательных поля: queryset и serializer_class
+    queryset = Car.objects.all()  # набор данных, которые мы должны получить
+    serializer_class = CarSerializerFromModelSerializer  # наш сериализатор
+
+
+class CarGetPutPatchDelete(RetrieveUpdateDestroyAPIView):
+    """
+    Этот класс нам позволяет получить информацию по id (Retrieve),
+    обновить (Update) и удалить (Destroy) (get, put, patch, delete).
+    """
+    queryset = Car.objects.all()
+    serializer_class = CarSerializerFromModelSerializer
+
+
+# ===============================================================================================
+#                           РЕАЛИЗАЦИЯ VIEWS НА ОСНОВЕ ModelViewSet
+
+class CarFromModelViewSet(ModelViewSet):
+    """
+    Одного этого класса достаточно, чтобы полностью реализовать GRUD.
+    """
+    queryset = Car.objects.all()
+    serializer_class = CarSerializerFromModelSerializer
+
