@@ -4,6 +4,7 @@ from django.http import JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK, HTTP_201_CREATED
+from rest_framework.views import APIView
 
 from .models import Car
 from .serializers import CarSerializer
@@ -68,11 +69,35 @@ def car_view(request):
         # return JsonResponse(context, status=201)
 
         # ВАРИАНТ С ИСПОЛЬЗОВАНИЕМ DRF:
+        # сравним request.body и request.data
+        request_body = request.body  # {'key': 'value'}
+        request_data = request.data  # b'{"key": "value"}'
         serializer = CarSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
+        serializer.is_valid(raise_exception=True)  # raise_exception=True означает, что если объект не пройдет
+        # валидацию, то сериализатор сам вернет нам нужную ошибку
+
+        # в поле validated_data у сериализатора появляется словарь, с помощью деструктуризации которого мы можем
+        # создать запись в нашу БД
         car = Car.objects.create(**serializer.validated_data)
         context = CarSerializer(car)
 
         return Response(context.data, status=HTTP_201_CREATED)
 
 
+# ===============================================================================================
+#                           РЕАЛИЗАЦИЯ VIEWS НА ОСНОВЕ КЛАССОВ
+
+class CarApiView(APIView):
+    def get(self, request, *args, **kwargs):
+        cars = Car.objects.all()
+        serializer = CarSerializer(cars, many=True)
+
+        return Response({'items': serializer.data}, status=HTTP_200_OK)
+
+    def post(self, request, *args, **kwargs):
+        serializer = CarSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        car = Car.objects.create(**serializer.validated_data)
+        context = CarSerializer(car)
+
+        return Response(context.data, status=HTTP_201_CREATED)
