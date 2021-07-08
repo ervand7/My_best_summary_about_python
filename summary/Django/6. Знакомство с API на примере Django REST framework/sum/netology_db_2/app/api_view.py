@@ -57,7 +57,8 @@ def car_view(request):
         cars = Car.objects.all()
         # Внимание! Поскольку из-за .all() мы передаем набор объектов, нам нужно указать флаг many=True
         serializer = CarSerializer(cars, many=True)
-        return Response({'items': serializer.data}, status=HTTP_200_OK)  # объекты лежат в аттрибуте data; байтовый request.body нам уже не подходит
+        return Response({'items': serializer.data},
+                        status=HTTP_200_OK)  # объекты лежат в аттрибуте data; байтовый request.body нам уже не подходит
 
     if request.method == POST:
         print('This was POST request')
@@ -86,11 +87,12 @@ def car_view(request):
         return Response(context.data, status=HTTP_201_CREATED)
 
 
+# ======================== 3 ВАРИАНТА РЕАЛИЗАЦИИ VIEWS НА ОСНОВЕ КЛАССОВ ========================
 # ===============================================================================================
-#                           РЕАЛИЗАЦИЯ VIEWS НА ОСНОВЕ КЛАССОВ
+#                           1) РЕАЛИЗАЦИЯ VIEWS НА ОСНОВЕ APIView
 
-class CarApiView(APIView):
-    def get(self, request, *args, **kwargs):
+class CarApiView(APIView):  # APIView - обязательное наследование
+    def get(self, request, *args, **kwargs):  # request, *args, **kwargs - обязательные параметры
         cars = Car.objects.all()
         serializer = CarSerializer(cars, many=True)
 
@@ -106,33 +108,41 @@ class CarApiView(APIView):
 
 
 # ===============================================================================================
-#             РЕАЛИЗАЦИЯ VIEWS НА ОСНОВЕ generics + сериализатора на основе ModelSerializer
+#      2) РЕАЛИЗАЦИЯ VIEWS НА ОСНОВЕ ListCreateAPIView + RetrieveUpdateDestroyAPIView
 
 class CarGetCreateApiView(ListCreateAPIView):
     """
     Этот класс получает информацию и создает информацию (get, post).
+    Мы описываем, что мы достаём и в каком формате отдаём, с помощью
+    атрибутов queryset и serializer.
     """
     # нужно заполнить 2 обязательных поля: queryset и serializer_class
     queryset = Car.objects.all()  # набор данных, которые мы должны получить
-    serializer_class = CarSerializerFromModelSerializer  # наш сериализатор
+    serializer_class = CarSerializerFromModelSerializer  # используем продвинутый сериализатор
 
 
 class CarGetPutPatchDelete(RetrieveUpdateDestroyAPIView):
     """
     Этот класс нам позволяет получить информацию по id (Retrieve),
     обновить (Update) и удалить (Destroy) (get, put, patch, delete).
+    Мы описываем, что мы достаём и в каком формате отдаём, с помощью
+    атрибутов queryset и serializer.
     """
+    # нужно заполнить 2 обязательных поля: queryset и serializer_class
     queryset = Car.objects.all()
     serializer_class = CarSerializerFromModelSerializer
 
 
 # ===============================================================================================
-#                           РЕАЛИЗАЦИЯ VIEWS НА ОСНОВЕ ModelViewSet
+#                           3) РЕАЛИЗАЦИЯ VIEWS НА ОСНОВЕ ModelViewSet
 
 class CarFromModelViewSet(ModelViewSet):
     """
     Одного этого класса достаточно, чтобы полностью реализовать GRUD.
+    Мы описываем, что мы достаём и в каком формате отдаём, с помощью
+    атрибутов queryset и serializer.
     """
+    # нужно заполнить 2 обязательных поля: queryset и serializer_class
     queryset = Car.objects.all()
     serializer_class = CarSerializerFromModelSerializer
 
