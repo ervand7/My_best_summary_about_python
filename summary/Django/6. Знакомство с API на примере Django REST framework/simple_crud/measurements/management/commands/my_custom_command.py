@@ -17,6 +17,6 @@ class Command(BaseCommand):
         with open('measurements_results.csv', 'r') as csvfile:
             measurements_results_reader = csv.DictReader(csvfile, delimiter=';')
             for item in measurements_results_reader:
-                measurement_result = Measurement({key: value for key, value in item.items() if key})
+                measurement_result = Measurement(**{key: value for key, value in item.items() if key})
                 measurement_result.save()
 
