@@ -1,0 +1,22 @@
+1.Фильтрация данных
+Официальная документация:
+https://django-filter.readthedocs.io/en/stable/ref/filters.html?highlight=MultipleChoiceFilter#filter-reference
+
+Интеграция django_filters.rest_framework и DRF
+https://django-filter.readthedocs.io/en/stable/guide/rest_framework.html#using-the-filterset-fields-shortcut
+
+Фильтры в DRF принято передавать через GET-параметры запроса.
+Инструкция по установке django-filter:
+https://www.django-rest-framework.org/api-guide/filtering/#djangofilterbackend
+
+
+
+
+
+2.Зачем нужна валидация данных
+3.Валидация и сериализация
+4.Сохранение данных
+5.Аутентификация
+
+
+
