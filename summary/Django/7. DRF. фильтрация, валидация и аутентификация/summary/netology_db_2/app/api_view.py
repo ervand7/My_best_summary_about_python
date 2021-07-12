@@ -13,11 +13,11 @@ class CarFilter(filters.FilterSet):
     фильтрации под каждое поле модели.
     """
     # зададим 3 кастомных фильтра: id, amount_from и amount_to
-    # http://127.0.0.1:4000/cars/?id=3
+    # http://127.0.0.1:4000/api/v1/cars/?id=3
     id = filters.ModelMultipleChoiceFilter(to_field_name="id", queryset=Car.objects.all())
-    # http://127.0.0.1:4000/cars/?amount_from=350
+    # http://127.0.0.1:4000/api/v1/cars/?amount_from=350
     amount_from = filters.NumberFilter(field_name="amount", lookup_expr="gte")  # lookup_expr - параметр фильтрации
-    # http://127.0.0.1:4000/cars/?amount_to=350
+    # http://127.0.0.1:4000/api/v1/cars/?amount_to=350
     amount_to = filters.NumberFilter(field_name="amount", lookup_expr="lte")
 
     class Meta:
@@ -45,8 +45,8 @@ class CarViewSetVariant2(viewsets.ModelViewSet):
     serializer_class = CarSerializerFromModelSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['name', 'amount']
-    # http://127.0.0.1:4000/cars/?name=first_car
-    # http://127.0.0.1:4000/cars/?amount=300
+    # http://127.0.0.1:4000/api/v1/cars/?name=first_car
+    # http://127.0.0.1:4000/api/v1/cars/?amount=300
 
 
 # ===============================================================================
@@ -67,5 +67,5 @@ class CarViewSetVariant3(viewsets.ModelViewSet):
         amount = self.request.query_params.get('amount')
         if amount:
             queryset = queryset.filter(amount=amount)
-        # http://127.0.0.1:4000/cars/?amount=2
+        # http://127.0.0.1:4000/api/v1/cars/?amount=2
         return queryset
