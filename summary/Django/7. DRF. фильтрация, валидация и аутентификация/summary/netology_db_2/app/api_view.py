@@ -1,11 +1,17 @@
 from django_filters import rest_framework as filters
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets
+from rest_framework.response import Response
+from rest_framework.status import HTTP_200_OK, HTTP_201_CREATED
+from rest_framework.views import APIView
 
 from .models import Car
 from .serializers import CarSerializerFromModelSerializer
 
 
+# =========================================================================================
+# =========================================================================================
+# ================================== Ф И Л Ь Т Р А Ц И Я ==================================
 # ВАРИАНТ 1. С ОПРЕДЕЛЕНИЕМ КЛАССА ФИЛЬТРАЦИИ
 class CarFilter(filters.FilterSet):
     """
@@ -69,3 +75,30 @@ class CarViewSetVariant3(viewsets.ModelViewSet):
             queryset = queryset.filter(amount=amount)
         # http://127.0.0.1:4000/api/v1/cars/?amount=2
         return queryset
+
+
+# =========================================================================================
+# =========================================================================================
+# ============================ В А Л И Д А Ц И Я. Сохранение ==============================
+class CarViewSet(viewsets.ViewSet):
+    """
+    В DRF принято описывать сохранение данных в сериализаторе.
+    Валидация данных и сохранение будет выполняться автоматически, если использовать
+    ModelViewSet. В противном случае, вы можно сохранить модель явно, как представленно ниже.
+
+    Обратите внимание, что create — это метод ViewSet, который вызывается при POST-запросе.
+    При PATCH/PUT будет вызываться метод update. Подробнее в документации про
+    ModelViewSet: https://www.django-rest-framework.org/api-guide/viewsets/#modelviewset
+    """
+    # Внимание! Все это мы прописываем только в том случае, если не используем ModelViewSet
+    # В данном случае мы используем просто ViewSet.
+    def create(self, request, *args, **kwargs):  # request, *args, **kwargs - обязательные параметры
+        serializer = CarSerializerFromModelSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()  # внутри save находится множетво ассертов
+        cars = Car.objects.create(**serializer.validated_data)
+        context = CarSerializerFromModelSerializer(cars)
+
+        return Response(context.data, status=HTTP_201_CREATED)
+    # POST http://localhost:4000/api/v1/cars/
+    # with body: {"name": "234", "amount":  1234, "password": "qwert", "password_confirm": "qwert"}
